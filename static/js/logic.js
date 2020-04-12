@@ -1,8 +1,12 @@
+//Creating a variable to hold my api key
 API_KEY="pk.eyJ1IjoidG9yYXVkOTYiLCJhIjoiY2s4Z2ptMzlsMDJhaTNvcnlwb3RxeDB3NCJ9.sD0jutz0gAEnpMbpbvD9YA"
-// Creating map object
+
+// Create our map, giving it the streetmap and earthquakes layers to display on load
 var myMap = L.map("map", {
-    center: [40.7, -94.5],
-    zoom: 4
+  center: [
+    37.09, -95.71
+  ],
+  zoom: 5,
   });
   
   // Adding tile layer to the map
@@ -13,16 +17,16 @@ var myMap = L.map("map", {
     accessToken: API_KEY
   }).addTo(myMap);
   
-  var baseUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
+  var url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
   
-  d3.json(baseUrl, function(data) {
+  d3.json(url, function(data) {
   
   function styleInfo(feature) {
     return {
       opacity: 1,
       fillOpacity: 1,
       fillColor: getColor(feature.properties.mag),
-      color: "#000000",
+      color: "grey",
       radius: getRadius(feature.properties.mag),
       stroke: true,
       weight: 0.5
@@ -74,7 +78,7 @@ var myMap = L.map("map", {
   legend.onAdd = function () {
     var div = L.DomUtil.create('div', 'legend');
     magnitude = [0, 1, 2, 3, 4, 5]
-    colors = ["red", "orange", "yellow", "green", "blue", "purple"]
+    colors = ["purple", "blue", "green", "yellow", "orange", "red"]
     for (var i = 0; i < magnitude.length; i++) {
       div.innerHTML +=
         "<i style='background: " + colors[i] + "'></i> " +
